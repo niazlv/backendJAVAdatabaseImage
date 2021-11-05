@@ -2,9 +2,12 @@
     <body>
         <form method="POST" enctype="multipart/form-data"
                 action="/upload">
-                File to upload: <input type="file" name="file"><br /> Name: <input
-                type="text" name="name"><br /> <br /> <input type="submit"
-                                                     value="Upload"> Press here to upload the file!
+                File to upload: <input type="file" name="file"><br /> <input type="submit"
+                                                     value="Upload"> Press here to upload the image!
+        </form>
+        <form method="GET" action="/download">
+                <input type="text" name="id"><br>
+                <input type="submit" value="GET"> Press here to get the image!
         </form>
     </body>
 </html>
