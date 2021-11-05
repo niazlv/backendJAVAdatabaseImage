@@ -22,26 +22,32 @@ public class FileUpload {
     @RequestMapping(value="/upload", method= RequestMethod.POST)
     public @ResponseBody
     String handleFileUpload(@RequestParam("name") String name,
-                            @RequestParam("file") MultipartFile file){
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                //BufferedOutputStream stream =
-                //        new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
-                File files = new File(name);
-                FileUtils.writeByteArrayToFile(files, bytes);
+                            @RequestParam("file") MultipartFile file) {
+        String[] path;
+        path = name.split("\\.");
 
-                int id = SQL.SQLadd(name,files);
-                files.delete();
-                //stream.write(bytes);
-                //stream.close();
-                return ""+id;
-            } catch (Exception e) {
-                return "err";
+        if (path[path.length - 1].equals("jpg") || path[path.length - 1].equals("jpeg")) {
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
+                    //BufferedOutputStream stream =
+                    //        new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
+                    File files = new File(name);
+                    FileUtils.writeByteArrayToFile(files, bytes);
+
+                    int id = SQL.SQLadd(name, files);
+                    files.delete();
+                    //stream.write(bytes);
+                    //stream.close();
+                    return "" + id;
+                } catch (Exception e) {
+                    return "err";
+                }
+            } else {
+                return "file is null";
             }
-        } else {
-            return "Вам не удалось загрузить " + name + " потому что файл пустой.";
         }
+        else
+            return "file not *.jpg || *.jpeg";
     }
-
 }
