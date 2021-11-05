@@ -21,9 +21,10 @@ public class FileUpload {
 
     @RequestMapping(value="/upload", method= RequestMethod.POST)
     public @ResponseBody
-    String handleFileUpload(@RequestParam("name") String name,
-                            @RequestParam("file") MultipartFile file) {
+    String handleFileUpload(@RequestParam("file") MultipartFile file) {
         String[] path;
+        String name = file.getOriginalFilename();
+        System.out.println(name);
         path = name.split("\\.");
 
         if (path[path.length - 1].equals("jpg") || path[path.length - 1].equals("jpeg")) {
